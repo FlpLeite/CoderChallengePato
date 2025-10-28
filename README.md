@@ -63,8 +63,8 @@ SistemaDefesaGlobal/
      ```bash
      dotnet run
      ```
-   - Por padrão a aplicação usa **Kestrel** e expõe a API em `http://localhost:5138` (a porta pode variar; verifique o terminal). A configuração de CORS permite que qualquer origem acesse os endpoints.
-   - Com o ambiente de desenvolvimento, a documentação Swagger ficará disponível em `http://localhost:5138/swagger`.
+   - Por padrão a aplicação usa **Kestrel** e expõe a API em `http://localhost:5099` (a porta pode variar; verifique o terminal). A configuração de CORS permite que qualquer origem acesse os endpoints.
+   - Com o ambiente de desenvolvimento, a documentação Swagger ficará disponível em `http://localhost:5099/swagger`.
 
 ## 4. Configurar e executar o frontend (PatosPrimordiais)
 
@@ -72,7 +72,7 @@ SistemaDefesaGlobal/
    - O frontend lê a URL base da API da variável `VITE_API_BASE_URL`, caindo em `http://localhost:5099` se nada for informado.
    - Para garantir a comunicação, crie um arquivo `.env` dentro de `PatoPrimordialWeb/PatosPrimordiais` (mesmo nível do `package.json`) com o conteúdo:
      ```env
-     VITE_API_BASE_URL=http://localhost:5138
+     VITE_API_BASE_URL=http://localhost:5099
      ```
      Ajuste a porta conforme a indicada pela API.
 
