@@ -1,0 +1,17 @@
+# .NET build artifacts
+**/bin/
+**/obj/
+
+# Node build artifacts
+PatoPrimordialWeb/PatosPrimordiais/node_modules/
+PatoPrimordialWeb/PatosPrimordiais/dist/
+
+# IDE files
+.vs/
+*.user
+*.suo
+
+# Tools
+*.log
+
+dotnet-install.sh

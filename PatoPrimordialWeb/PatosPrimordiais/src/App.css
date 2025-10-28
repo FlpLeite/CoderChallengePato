@@ -1,0 +1,23 @@
+.app-shell {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.app-main {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+}

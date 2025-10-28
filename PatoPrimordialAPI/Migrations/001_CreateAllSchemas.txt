@@ -1,0 +1,157 @@
+-- fabricantes
+CREATE TABLE fabricantes (
+    id bigserial PRIMARY KEY,
+    nome varchar(200) NOT NULL,
+    marca varchar(200),
+    pais_origem varchar(120)
+);
+
+-- pontos_referencia
+CREATE TABLE pontos_referencia (
+    id bigserial PRIMARY KEY,
+    nome varchar(200) NOT NULL,
+    latitude double precision NOT NULL,
+    longitude double precision NOT NULL,
+    raio_metros double precision NOT NULL
+);
+
+-- drones
+CREATE TABLE drones (
+    id bigserial PRIMARY KEY,
+    numero_serie varchar(200) NOT NULL,
+    fabricante_id bigint NULL,
+    status varchar(100) NOT NULL,
+    precisao_nominal_min_cm numeric(18,4),
+    precisao_nominal_max_m numeric(18,4),
+    ultimo_contato_em timestamptz
+);
+
+CREATE UNIQUE INDEX ix_drones_numero_serie ON drones (numero_serie);
+CREATE INDEX ix_drones_fabricante_id ON drones (fabricante_id);
+
+ALTER TABLE drones 
+ADD CONSTRAINT fk_drones_fabricantes_fabricante_id 
+FOREIGN KEY (fabricante_id) 
+REFERENCES fabricantes(id) 
+ON DELETE SET NULL;
+
+-- patos
+CREATE TABLE patos (
+    id bigserial PRIMARY KEY,
+    codigo varchar(200) NOT NULL,
+    altura_cm numeric(18,4) NOT NULL,
+    peso_g numeric(18,4) NOT NULL,
+    cidade varchar(200) NOT NULL,
+    pais varchar(120) NOT NULL,
+    latitude double precision NOT NULL,
+    longitude double precision NOT NULL,
+    precisao_m numeric(18,4) NOT NULL,
+    ponto_referencia_id bigint NULL,
+    estado varchar(50) NOT NULL,
+    bpm integer NULL,
+    mutacoes_qtde integer NULL,
+    poder_nome varchar(200),
+    poder_descricao text,
+    poder_tags_csv varchar(500),
+    criado_em timestamptz NOT NULL,
+    atualizado_em timestamptz NOT NULL
+);
+
+CREATE UNIQUE INDEX ix_patos_codigo ON patos (codigo);
+CREATE INDEX ix_patos_ponto_referencia_id ON patos (ponto_referencia_id);
+
+ALTER TABLE patos 
+ADD CONSTRAINT fk_patos_pontos_referencia_ponto_referencia_id 
+FOREIGN KEY (ponto_referencia_id) 
+REFERENCES pontos_referencia(id) 
+ON DELETE SET NULL;
+
+-- avistamentos
+CREATE TABLE avistamentos (
+    id bigserial PRIMARY KEY,
+    drone_id bigint NOT NULL,
+    pato_id bigint NOT NULL,
+    altura_valor numeric(18,4) NOT NULL,
+    altura_unidade text NOT NULL,
+    peso_valor numeric(18,4) NOT NULL,
+    peso_unidade text NOT NULL,
+    altura_cm numeric(18,4) NOT NULL,
+    peso_g numeric(18,4) NOT NULL,
+    latitude double precision NOT NULL,
+    longitude double precision NOT NULL,
+    precisao_valor numeric(18,4) NOT NULL,
+    precisao_unidade text NOT NULL,
+    precisao_m numeric(18,4) NOT NULL,
+    confianca double precision NOT NULL,
+    cidade varchar(200) NOT NULL,
+    pais varchar(120) NOT NULL,
+    estado_pato varchar(50) NOT NULL,
+    bpm integer NULL,
+    mutacoes_qtde integer NULL,
+    poder_nome text NULL,
+    poder_descricao text NULL,
+    poder_tags_csv text NULL,
+    criado_em timestamptz NOT NULL
+);
+
+CREATE INDEX ix_avistamentos_criado_em ON avistamentos (criado_em);
+CREATE INDEX ix_avistamentos_drone_id ON avistamentos (drone_id);
+CREATE INDEX ix_avistamentos_pato_id ON avistamentos (pato_id);
+
+ALTER TABLE avistamentos 
+ADD CONSTRAINT fk_avistamentos_drones_drone_id 
+FOREIGN KEY (drone_id) 
+REFERENCES drones(id) 
+ON DELETE RESTRICT;
+
+ALTER TABLE avistamentos 
+ADD CONSTRAINT fk_avistamentos_patos_pato_id 
+FOREIGN KEY (pato_id) 
+REFERENCES patos(id) 
+ON DELETE CASCADE;
+
+-- Missao 2 - Estruturas de análise
+CREATE TABLE parametros_analise (
+    id bigint PRIMARY KEY,
+    chave varchar(200) NOT NULL,
+    valor_num double precision NULL,
+    valor_txt varchar(500) NULL,
+    atualizado_em timestamptz NOT NULL
+);
+
+CREATE UNIQUE INDEX ix_parametros_analise_chave ON parametros_analise (chave);
+
+CREATE TABLE analise_pato (
+    id bigint PRIMARY KEY,
+    pato_id bigint NOT NULL,
+    custo_transporte double precision NOT NULL,
+    risco_total integer NOT NULL,
+    valor_cientifico integer NOT NULL,
+    poderio_necessario integer NOT NULL,
+    prioridade double precision NOT NULL,
+    classe_prioridade varchar(10) NOT NULL,
+    classe_risco varchar(10) NOT NULL,
+    dist_km double precision NOT NULL,
+    calculado_em timestamptz NOT NULL
+);
+
+CREATE UNIQUE INDEX ix_analise_pato_pato_id ON analise_pato (pato_id);
+
+ALTER TABLE analise_pato 
+ADD CONSTRAINT fk_analise_pato_patos_pato_id 
+FOREIGN KEY (pato_id) 
+REFERENCES patos(id) 
+ON DELETE CASCADE;
+
+-- Parâmetros padrão
+INSERT INTO parametros_analise (id, chave, valor_num, valor_txt, atualizado_em) 
+VALUES 
+    (4001, 'custo_base', 2000, NULL, '2025-01-01T00:00:00Z'),
+    (4002, 'custo_por_tonelada', 1200, NULL, '2025-01-01T00:00:00Z'),
+    (4003, 'custo_por_km', 5, NULL, '2025-01-01T00:00:00Z'),
+    (4004, 'custo_por_metro', 50, NULL, '2025-01-01T00:00:00Z'),
+    (4005, 'peso_valor_cientifico', 0.45, NULL, '2025-01-01T00:00:00Z'),
+    (4006, 'peso_custo', -0.35, NULL, '2025-01-01T00:00:00Z'),
+    (4007, 'peso_risco', -0.20, NULL, '2025-01-01T00:00:00Z'),
+    (4008, 'dsin_lat', -15.793889, NULL, '2025-01-01T00:00:00Z'),
+    (4009, 'dsin_lon', -47.882778, NULL, '2025-01-01T00:00:00Z');

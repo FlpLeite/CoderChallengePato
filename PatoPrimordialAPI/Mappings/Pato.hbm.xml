@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="PatoPrimordialAPI" namespace="PatoPrimordialAPI.Domain.Entities">
+  <class name="Pato" table="patos" schema="public" lazy="false" batch-size="50">
+    <id name="Id" column="id" type="Int64">
+      <generator class="identity" />
+    </id>
+
+    <property name="Codigo" column="codigo" type="String" length="100" not-null="true" />
+    <property name="AlturaCm" column="altura_cm" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="PesoG" column="peso_g" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="Cidade" column="cidade" type="String" length="200" not-null="true" />
+    <property name="Pais" column="pais" type="String" length="200" not-null="true" />
+    <property name="Latitude" column="lat" type="Double" not-null="true" />
+    <property name="Longitude" column="lon" type="Double" not-null="true" />
+    <property name="PrecisaoM" column="precisao_m" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="Estado" column="estado" type="String" length="50" not-null="true" />
+    <property name="Bpm" column="bpm" type="Int32" />
+    <property name="MutacoesQtde" column="mutacoes_qtde" type="Int32" />
+    <property name="PoderNome" column="poder_nome" type="String" length="200" />
+    <property name="PoderDescricao" column="poder_descricao" type="String" length="1000" />
+    <property name="PoderTagsCsv" column="poder_tags_csv" type="String" length="400" />
+    <property name="CriadoEm" column="criado_em" type="DateTime" not-null="true" />
+    <property name="AtualizadoEm" column="atualizado_em" type="DateTime" not-null="true" />
+
+    <many-to-one name="PontoReferencia" class="PontoReferencia" column="ponto_referencia_id" not-null="false" />
+
+    <bag name="Avistamentos" inverse="true" cascade="none" lazy="true" batch-size="50">
+      <key column="pato_id" />
+      <one-to-many class="Avistamento" />
+    </bag>
+  </class>
+</hibernate-mapping>

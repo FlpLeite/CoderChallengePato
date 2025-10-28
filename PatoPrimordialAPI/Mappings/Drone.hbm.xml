@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="PatoPrimordialAPI" namespace="PatoPrimordialAPI.Domain.Entities">
+  <class name="Drone" table="drones" schema="public" lazy="false" batch-size="50">
+    <id name="Id" column="id" type="Int64">
+      <generator class="identity" />
+    </id>
+
+    <property name="NumeroSerie" column="numero_serie" type="String" length="200" not-null="true" />
+    <many-to-one name="Fabricante" class="Fabricante" column="fabricante_id" not-null="false" />
+    <property name="Status" column="status" type="String" length="50" not-null="true" />
+    <property name="PrecisaoNominalMinCm" column="precisao_nominal_min_cm" type="Decimal" precision="12" scale="2" />
+    <property name="PrecisaoNominalMaxM" column="precisao_nominal_max_m" type="Decimal" precision="12" scale="2" />
+    <property name="UltimoContatoEm" column="ultimo_contato_em" type="DateTime" />
+
+    <bag name="Avistamentos" inverse="true" cascade="none" lazy="true" batch-size="50">
+      <key column="drone_id" />
+      <one-to-many class="Avistamento" />
+    </bag>
+  </class>
+</hibernate-mapping>

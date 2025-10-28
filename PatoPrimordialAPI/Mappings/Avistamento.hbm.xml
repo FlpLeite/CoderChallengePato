@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="PatoPrimordialAPI" namespace="PatoPrimordialAPI.Domain.Entities">
+  <class name="Avistamento" table="avistamentos" schema="public" lazy="false" batch-size="50">
+    <id name="Id" column="id" type="Int64">
+      <generator class="identity" />
+    </id>
+
+    <many-to-one name="Drone" class="Drone" column="drone_id" not-null="true" />
+    <many-to-one name="Pato" class="Pato" column="pato_id" not-null="true" />
+
+    <property name="AlturaValor" column="altura_valor" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="AlturaUnidade" column="altura_unidade" type="String" length="20" not-null="true" />
+    <property name="PesoValor" column="peso_valor" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="PesoUnidade" column="peso_unidade" type="String" length="20" not-null="true" />
+    <property name="AlturaCm" column="altura_cm" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="PesoG" column="peso_g" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="Latitude" column="lat" type="Double" not-null="true" />
+    <property name="Longitude" column="lon" type="Double" not-null="true" />
+    <property name="PrecisaoValor" column="precisao_valor" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="PrecisaoUnidade" column="precisao_unidade" type="String" length="20" not-null="true" />
+    <property name="PrecisaoM" column="precisao_m" type="Decimal" precision="12" scale="2" not-null="true" />
+    <property name="Confianca" column="confianca" type="Double" not-null="true" />
+    <property name="Cidade" column="cidade" type="String" length="200" not-null="true" />
+    <property name="Pais" column="pais" type="String" length="200" not-null="true" />
+    <property name="EstadoPato" column="estado_pato" type="String" length="50" not-null="true" />
+    <property name="Bpm" column="bpm" type="Int32" />
+    <property name="MutacoesQtde" column="mutacoes_qtde" type="Int32" />
+    <property name="PoderNome" column="poder_nome" type="String" length="200" />
+    <property name="PoderDescricao" column="poder_descricao" type="String" length="1000" />
+    <property name="PoderTagsCsv" column="poder_tags_csv" type="String" length="400" />
+    <property name="CriadoEm" column="criado_em" type="DateTime" not-null="true" />
+  </class>
+</hibernate-mapping>

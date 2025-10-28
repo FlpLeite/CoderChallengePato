@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-night-950 text-slate-100 antialiased;
+}
+
+a {
+  @apply text-emerald-400 hover:text-emerald-300 transition-colors;
+}
