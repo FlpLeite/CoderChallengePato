@@ -39,7 +39,6 @@ SistemaDefesaGlobal/
 
 1. **Configurar a conexão com o banco**
    - A API utiliza uma connection string chamada `Default`. Por padrão ela aponta para `Host=localhost;Port=5432;Database=patos_primordiais;Username=postgres;Password=40028922`. Ajuste usuário, senha, host e porta conforme o seu ambiente de PostgreSQL em `PatoPrimordialAPI/appsettings.Development.json` ou `appsettings.json`.
-   - Alternativamente, defina a variável de ambiente `ConnectionStrings__Default` antes de executar a aplicação para evitar versionar senhas.
 
 2. **Instalar as dependências .NET**
    - Abra um terminal na pasta da API:
