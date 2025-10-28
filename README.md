@@ -1,3 +1,33 @@
+# DSIN — Desafio Pato Primordial • Sistema de Defesa Global
+
+API .NET + React/Vite para catalogar, analisar e exibir dados dos “Patos Primordiais”.
+
+![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4)
+![React](https://img.shields.io/badge/React-18-61DAFB)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13%2B-336791)
+![License](https://img.shields.io/badge/license-MIT-informational)
+
+**Links rápidos**
+- API: [`PatoPrimordialAPI`](./PatoPrimordialAPI) • Swagger: `http://localhost:5099/swagger`
+- Frontend: [`PatoPrimordialWeb/PatosPrimordiais`](./PatoPrimordialWeb/PatosPrimordiais)
+- Scripts úteis: `dotnet ef database update` • `npm run dev`
+
+## Comandos base para rodar em ambiente ja configurado
+```bash
+# 1) API
+cd PatoPrimordialAPI
+dotnet restore
+dotnet ef database update
+dotnet run
+
+# 2) Frontend (novo terminal)
+cd ../PatoPrimordialWeb/PatosPrimordiais
+echo VITE_API_BASE_URL=http://localhost:5099 > .env
+npm install
+npm run dev
+```
+
 # Sistema de Defesa Global - Guia de Execução
 
 Este repositório contém dois projetos que trabalham em conjunto:
@@ -89,17 +119,3 @@ SistemaDefesaGlobal/
      npm run dev
      ```
    - O Vite iniciará um servidor (geralmente em `http://localhost:5173`). Abra o navegador e acesse a URL informada no terminal. Ao abrir a aplicação, ela buscará dados da API configurada anteriormente.
-
-## 5. Testes (opcional)
-
-- O projeto **PatoPrimordialAPI.Tests** contém os testes automatizados da API. Para executá-los, certifique-se de estar na pasta raiz do repositório e rode:
-  ```bash
-  dotnet test
-  ```
-
-## 6. Dicas e solução de problemas
-
-- **Erro de conexão com o banco**: revise a connection string e verifique se o PostgreSQL está aceitando conexões (serviço ativo e porta liberada).
-- **`dotnet ef` não encontrado**: confirme a instalação do `dotnet-ef` (reinicie o terminal após instalar, se necessário) ou execute `dotnet tool restore` caso utilize manifestos de ferramentas.
-- **CORS ou falha ao buscar dados no frontend**: confirme que a API está em execução e que `VITE_API_BASE_URL` aponta para o mesmo host/porta exibidos por `dotnet run`.
-- **Portas ocupadas**: se `dotnet run` ou `npm run dev` indicarem conflito de portas, finalize o processo que está usando a porta ou altere a configuração de URL/porta (via `appsettings.json` para a API e argumento `--port` no Vite).
