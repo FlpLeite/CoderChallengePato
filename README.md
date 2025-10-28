@@ -69,7 +69,7 @@ SistemaDefesaGlobal/
 ## 4. Configurar e executar o frontend (PatosPrimordiais)
 
 1. **Ajustar a URL da API**
-   - O frontend lê a URL base da API da variável `VITE_API_BASE_URL`, caindo em `http://localhost:5138` se nada for informado.
+   - O frontend lê a URL base da API da variável `VITE_API_BASE_URL`, caindo em `http://localhost:5099` se nada for informado.
    - Para garantir a comunicação, crie um arquivo `.env` dentro de `PatoPrimordialWeb/PatosPrimordiais` (mesmo nível do `package.json`) com o conteúdo:
      ```env
      VITE_API_BASE_URL=http://localhost:5138
